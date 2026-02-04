@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wannune Store | Quality Essentials</title>
+    <style>
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --bg: #ffffff;
+            --card-bg: #f8fafc;
+            --text: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        .cart-icon {
+            font-size: 1.2rem;
+            position: relative;
+            cursor: pointer;
+            background: #f1f5f9;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 70vh;
+            min-height: 500px;
+            background: linear-gradient(to right, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.3)), 
+                        url('https://images.unsplash.com/photo-1441986236893-3bc3306e9037?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            color: white;
+        }
+
+        .hero-content { max-width: 600px; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero p { font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9; }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover { background: #2563eb; transform: translateY(-2px); }
+
+        /* --- Sections --- */
+        section { padding: 4rem 5%; }
+        .section-title { text-align: center; margin-bottom: 3rem; font-size: 2rem; position: relative; }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: var(--accent);
+            margin: 10px auto;
+        }
+
+        /* --- Product Grid --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .product-card img { width: 100%; height: 250px; object-fit: cover; }
+        
+        .product-info { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .product-info h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .price { font-size: 1.25rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem; }
+        
+        .add-btn {
+            margin-top: auto;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .add-btn:hover { background: var(--primary); color: white; }
+
+        /* --- About & Contact --- */
+        .about-section { background: #f1f5f9; text-align: center; }
+        .about-content { max-width: 700px; margin: 0 auto; font-size: 1.1rem; color: #475569; }
+
+        .contact-container { max-width: 600px; margin: 0 auto; }
+        .contact-form { display: grid; gap: 1rem; }
+        .contact-form input, .contact-form textarea {
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            width: 100%;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--primary);
+            color: #94a3b8;
+            text-align: center;
+            padding: 3rem 5%;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                transition: 0.4s;
+                box-shadow: -10px 0 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active { right: 0; }
+            
+            .hero { text-align: center; justify-content: center; }
+            .section-title { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">WANNUNE STORE</div>
+        
+        <div class="nav-links" id="navLinks">
+            <a href="#home" onclick="toggleMenu()">Home</a>
+            <a href="#products" onclick="toggleMenu()">Shop</a>
+            <a href="#about" onclick="toggleMenu()">About</a>
+            <a href="#contact" onclick="toggleMenu()">Contact</a>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="cart-icon">
+                 <span id="cart-count">0</span>
+            </div>
+            <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <h1>Quality Goods, Delivered to You.</h1>
+            <p>Welcome to Wannune Store. Explore our exclusive range of products designed to simplify and style your life.</p>
+            <a href="#products" class="btn">Shop Now</a>
+        </div>
+    </header>
+
+    <section id="products">
+        <h2 class="section-title">Best Sellers</h2>
+        <div class="product-grid" id="product-list">
+            </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <h2 class="section-title">About Wannune Store</h2>
+        <div class="about-content">
+            <p>At Wannune Store, we believe in quality over quantity. Our mission is to provide our community with reliable products and exceptional service. Every item in our catalog is carefully vetted to ensure it meets your high standards.</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-container">
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <textarea rows="5" placeholder="How can we help you?" required></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p style="color: white; margin-bottom: 10px;">WANNUNE STORE</p>
+        <p>&copy; 2026 All rights reserved. | Built for the modern shopper.</p>
+    </footer>
+
+    <script>
+        // --- Mobile Menu Toggle ---
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            const toggle = document.getElementById('mobile-menu');
+            nav.classList.toggle('active');
+        }
+
+        // --- Product Data ---
+        const products = [
+            { id: 1, name: "Signature Timepiece", price: 145, img: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=500&q=80" },
+            { id: 2, name: "Eco Leather Wallet", price: 45, img: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=500&q=80" },
+            { id: 3, name: "Studio Headphones", price: 199, img: "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=500&q=80" },
+            { id: 4, name: "Traveler Backpack", price: 120, img: "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&w=500&q=80" },
+            { id: 5, name: "Smart Desk Lamp", price: 75, img: "https://images.unsplash.com/photo-1534073828943-f801091bb18c?auto=format&fit=crop&w=500&q=80" },
+            { id: 6, name: "Obsidian Notebook", price: 25, img: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=500&q=80" }
+        ];
+
+        // --- Render Products ---
+        const productList = document.getElementById('product-list');
+        let cartCount = 0;
+
+        function renderProducts() {
+            products.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${p.img}" alt="${p.name}">
+                    <div class="product-info">
+                        <h3>${p.name}</h3>
+                        <span class="price">$${p.price}</span>
+                        <button class="add-btn" onclick="updateCart()">Add to Cart</button>
+                    </div>
+                `;
+                productList.appendChild(card);
+            });
+        }
+
+        // --- Cart Counter ---
+        function updateCart() {
+            cartCount++;
+            document.getElementById('cart-count').innerText = cartCount;
+            
+            // Animation feedback
+            const cart = document.querySelector('.cart-icon');
+            cart.style.background = '#dbeafe';
+            setTimeout(() => cart.style.background = '#f1f5f9', 200);
+        }
+
+        renderProducts();
+
+        // Contact Form alert
+        document.querySelector('.contact-form').onsubmit = (e) => {
+            e.preventDefault();
+            alert('Message received! Wannune Store will get back to you soon.');
+        };
+    </script>
+</body>
+</html>
