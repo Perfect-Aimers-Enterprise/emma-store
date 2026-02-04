@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wannune Store | Quality Essentials</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* --- CSS Variables & Reset --- */
         :root {
@@ -108,7 +109,7 @@
             height: 70vh;
             min-height: 500px;
             background: linear-gradient(to right, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.3)), 
-                        url('https://images.unsplash.com/photo-1441986236893-3bc3306e9037?auto=format&fit=crop&w=1500&q=80');
+                        url('hero1.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -242,9 +243,12 @@
         </div>
 
         <div style="display: flex; align-items: center; gap: 15px;">
-            <div class="cart-icon">
-                 <span id="cart-count">0</span>
-            </div>
+            <!-- <div class="cart-icon"> -->
+            <i class="fa-solid fa-cart-shopping cart-icon">
+                <span id="cart-count">0</span>
+            </i>
+            
+            <!-- </div> -->
             <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
